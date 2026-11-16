@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f8f6f1">
+    <meta name="description" content="Arkadaşlarınla aynı puzzle'ın etrafında buluş.">
+    <title>parça parça — birlikte puzzle</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <div class="page-glow glow-a"></div>
+    <div class="page-glow glow-b"></div>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="parça parça ana sayfa"><span class="brand-mark">p.</span><span>parça <b>parça</b></span></a>
+      <div class="top-note"><span class="sparkle">✳</span> bir araya gelince güzel</div>
+      <button class="avatar-dot" title="Oyuncu" aria-label="Oyuncu">✿</button>
+    </header>
+
+    <main>
+      <section id="lobby" class="lobby">
+        <div class="hero">
+          <div class="eyebrow"><span class="eyebrow-dot"></span> UZAKLAR YAKIN OLSUN</div>
+          <h1>Bir puzzle,<br>bir sürü <span>güzel an.</span></h1>
+          <p>Parçaları beraber bulun, sohbet edin, keyfinize bakın.<br>En güzel şeyler birlikte tamamlanır.</p>
+        </div>
+
+        <div class="lobby-grid">
+          <section class="panel create-panel">
+            <div class="panel-heading">
+              <span class="step-number">01</span>
+              <div><h2>Bir oda kur</h2><p>Arkadaşlarını davet et, başlayın.</p></div>
+              <span class="heading-icon">✦</span>
+            </div>
+            <label class="input-label" for="player-name">SANA NASIL SESLENELİM?</label>
+            <input id="player-name" class="text-input" maxlength="20" placeholder="Adını yaz..." autocomplete="nickname">
+
+            <label class="input-label image-label">BİR GÖRSEL SEÇ</label>
+            <div id="preset-list" class="preset-list" aria-label="Puzzle görselleri"></div>
+            <label class="upload-tile" for="image-upload">
+              <span class="upload-icon">↥</span><span><b>Kendi görselini yükle</b><small>JPG, PNG veya WebP · sana özel bir puzzle</small></span><span class="upload-arrow">＋</span>
+              <input id="image-upload" type="file" accept="image/png,image/jpeg,image/webp">
+            </label>
+            <div id="upload-status" class="upload-status"></div>
+
+            <label class="input-label count-label">PARÇA SAYISI</label>
+            <div class="piece-counts" role="group" aria-label="Parça sayısı">
+              <button data-pieces="12" class="piece-choice">12</button>
+              <button data-pieces="50" class="piece-choice">50</button>
+              <button data-pieces="100" class="piece-choice selected">100</button>
+              <button data-pieces="250" class="piece-choice">250</button>
+              <button data-pieces="500" class="piece-choice">500</button>
+              <button data-pieces="1000" class="piece-choice">1000</button>
+            </div>
+            <button id="create-room" class="primary-button">Odamı oluştur <span>↗</span></button>
+          </section>
+
+          <aside class="right-column">
+            <section class="panel join-panel">
+              <div class="panel-heading">
+                <span class="step-number step-lilac">02</span>
+                <div><h2>Bir odaya katıl</h2><p>Oda kodunu gir, arkadaşlarına yetiş.</p></div>
+              </div>
+              <label class="input-label" for="room-code">ODA NUMARASI</label>
+              <div class="join-row"><input id="room-code" class="text-input code-input" placeholder="ÖR. LAL-42" maxlength="7" autocomplete="off"><button id="join-room" class="join-button" aria-label="Odaya katıl">→</button></div>
+            </section>
+            <div class="room-illustration">
+              <div class="illustration-sun"></div>
+              <div class="illustration-hill hill-back"></div><div class="illustration-hill hill-front"></div>
+              <span class="float-piece piece-one">✿</span><span class="float-piece piece-two">✦</span><span class="float-piece piece-three">●</span>
+              <div class="illustration-caption"><span>☁</span><b>Yan yana olamasak da,<br>aynı parçadayız.</b></div>
+            </div>
+            <div class="mini-note"><span>♡</span> Tamamlamak değil, birlikte olmak güzel.</div>
+          </aside>
+        </div>
+        <footer class="lobby-footer"><span>✿</span> Hemen başla, arkadaşını sonra çağır. &nbsp;·&nbsp; Ücretsiz, hep birlikte.</footer>
+      </section>
+
+      <section id="waiting" class="waiting hidden">
+        <div class="waiting-card">
+          <span class="waiting-flower">✿</span><div class="eyebrow">ODA HAZIR</div><h1>Güzel şeyler<br><span>beklemeye değer.</span></h1>
+          <p>Oda numaranı ya da bağlantıyı arkadaşlarınla paylaş.</p>
+          <div class="invite-code"><span>ODA NUMARASI</span><strong id="display-code"></strong><button id="copy-code" title="Kodu kopyala">▢</button></div>
+          <button id="copy-link" class="secondary-button">Davet bağlantısını kopyala <span>↗</span></button>
+          <div class="waiting-divider"><span>OYUNCULAR</span></div>
+          <div id="waiting-players" class="waiting-players"></div>
+          <button id="start-game" class="primary-button">Puzzle'a başla <span>✳</span></button>
+          <button id="back-home" class="text-button">← Ana sayfaya dön</button>
+        </div>
+      </section>
+
+      <section id="game" class="game hidden">
+        <header class="game-header">
+          <a class="brand" href="/"><span class="brand-mark">p.</span><span>parça <b>parça</b></span></a>
+          <button id="game-home" class="game-home-button" type="button" title="Ana sayfaya dön">← <span>Ana sayfa</span></button>
+          <div class="game-room-tag">ODA <b id="game-code"></b><button id="share-room" title="Bağlantıyı kopyala">↗</button></div>
+          <div class="game-header-right"><div class="player-list" id="game-players"></div><div class="timer"><span>◷</span><b id="timer">00:00</b></div></div>
+        </header>
+        <div class="game-content">
+          <div class="game-toolbar"><div><h1>Yavaş yavaş, <span>parça parça.</span></h1><p id="game-subtitle">Bir parçaya dokun, birlikte tamamlayalım.</p></div><div class="progress-pill"><span>✿</span><b id="progress">0</b><small> / <span id="total-pieces">100</span> parça</small><span class="progress-bar"><i id="progress-fill"></i></span></div></div>
+          <section class="media-section" aria-label="Kamera ve mikrofon">
+            <div class="media-toolbar">
+              <span class="media-consent-note">Kamera ve mikrofon kapalıdır; açmak için tarayıcı izni gerekir.</span>
+              <div class="media-controls">
+                <button id="media-camera" class="media-control" type="button" aria-pressed="false">▣ Kamerayı aç</button>
+                <button id="media-microphone" class="media-control" type="button" aria-pressed="false">♫ Mikrofonu aç</button>
+              </div>
+            </div>
+            <div id="media-tiles" class="media-tiles" aria-live="polite"></div>
+          </section>
+          <div id="puzzle-stage" class="puzzle-stage"><div id="puzzle-board" class="puzzle-board" aria-label="Puzzle çalışma alanı"></div><div id="pieces-layer" class="pieces-layer"></div><div class="reference-preview"><span>GÖRSEL</span><img id="reference-image" alt="Puzzle görselinin tamamı"></div></div>
+          <div class="game-footer"><span><i class="online-dot"></i><b id="online-count">1</b> kişi birlikte oynuyor</span><span><b id="loose-count">100</b> parça masada</span><button id="capture-memory" class="capture-button hidden" type="button">✦ Anı kartı oluştur</button><button id="chat-toggle" class="chat-toggle">Sohbet <span>↗</span></button></div>
+        </div>
+        <aside id="chat-panel" class="chat-panel hidden"><div class="chat-heading"><b>Biraz sohbet mi?</b><button id="chat-close">×</button></div><div id="chat-messages" class="chat-messages"></div><form id="chat-form"><input id="chat-input" maxlength="180" placeholder="Bir şeyler yaz..."><button aria-label="Gönder">↗</button></form></aside>
+      </section>
+    </main>
+    <div id="completion-modal" class="completion-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="completion-title">
+      <section class="completion-card">
+        <button id="completion-close" class="completion-close" aria-label="Kutlamayı kapat">×</button>
+        <div class="celebration-confetti" aria-hidden="true">✦　✿　✧　✿　✦</div>
+        <div class="completion-flower" aria-hidden="true">✿</div>
+        <p class="completion-eyebrow">BİRLİKTE TAMAMLADINIZ</p>
+        <h2 id="completion-title">Harika bir<br><span>takımdınız!</span></h2>
+        <p class="completion-copy">Her parça yerini buldu. Bu güzel anın süresi:</p>
+        <div id="completion-time" class="completion-time">00:00</div>
+        <div class="completion-actions">
+          <button id="completion-close-action" class="secondary-button" type="button">Kapat</button>
+          <button id="completion-home" class="primary-button" type="button">Ana sayfa <span>⌂</span></button>
+        </div>
+      </section>
+    </div>
+    <div id="memory-modal" class="memory-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="memory-title">
+      <section class="memory-card">
+        <button id="memory-close" class="memory-close" type="button" aria-label="Anı kartını kapat">×</button>
+        <p class="memory-eyebrow">BİRLİKTE TAMAMLANDI</p>
+        <h2 id="memory-title">Bu güzel an sizin.</h2>
+        <p id="memory-status" class="memory-status" role="status">Anı kartınız hazırlanıyor…</p>
+        <img id="memory-preview" class="memory-preview hidden" alt="Puzzle anı kartı önizlemesi">
+        <div class="memory-actions">
+          <button id="memory-download" class="primary-button" type="button" disabled>İndir <span>↓</span></button>
+          <button id="memory-dismiss" class="secondary-button" type="button">Kapat</button>
+        </div>
+      </section>
+    </div>
+    <div id="toast" class="toast" role="status"></div>
+    <script src="/client.js"></script>
+  </body>
+</html>

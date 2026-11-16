@@ -1,0 +1,12 @@
+{
+  "name": "birlikte-puzzle",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Arkadaşlarla gerçek zamanlı çevrimiçi puzzle",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}
